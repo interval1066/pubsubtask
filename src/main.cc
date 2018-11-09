@@ -33,7 +33,7 @@ main(int argc, char** argv)
 			std::cout << iss.str() << std::endl;
 		}
 		
-		/*ModuleA* thread1 = new ModuleA();
+		ModuleA* thread1 = new ModuleA();
 		ModuleA* thread2 = new ModuleA();
 		ModuleB* thread3 = new ModuleB();
 		ModuleB* thread4 = new ModuleB();
@@ -84,7 +84,7 @@ main(int argc, char** argv)
 		if(thread3) delete thread3;
 
 		if(thread4) delete thread4;
-		delete msg_server;*/
+		delete msg_server;
 		inputfile.close();
 
 		outputfile.flush();
