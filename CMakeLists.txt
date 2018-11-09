@@ -10,7 +10,10 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CMAKE_CXX_FLAGS} -Wall
 
 include_directories("include")
 file(GLOB_RECURSE SOURCES "src/*.cc")
+
 add_executable( ${CMAKE_PROJECT_NAME} ${SOURCES})
+add_executable( create_data create_data.cc )
+
 set ( PROJECT_LINK_LIBS pthread )
 target_link_libraries( ${CMAKE_PROJECT_NAME} ${PROJECT_LINK_LIBS} )
 
