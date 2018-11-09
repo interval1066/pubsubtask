@@ -53,7 +53,7 @@ main(int argc, char** argv)
 		// Waitting for 1 seconds
 		usleep(1000000);
 		// Unsubscribe thread2 from all topics
-	   msg_server->unsubscribeOneThreadFromAllTopics(thread2);
+		msg_server->unsubscribeOneThreadFromAllTopics(thread2);
 
 		while (true) {}
 			std::cout << "done" << std::endl;
