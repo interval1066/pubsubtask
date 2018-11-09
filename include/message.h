@@ -45,9 +45,10 @@ public:
 	}
 
 private:
-    std::string message_content;
-    uint64_t time_stamp;
-    std::string topic_name;
+	std::string message_content;
+	uint64_t time_stamp;
+	std::string topic_name;
+	int data;
 };
 
 #endif
