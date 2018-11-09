@@ -9,6 +9,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CMAKE_CXX_FLAGS} -Wall -g 
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CMAKE_CXX_FLAGS} -Wall -O2 -s")
 
 include_directories("include")
+include_directories("include/algos")
 file(GLOB_RECURSE SOURCES "src/*.cc")
 
 add_executable( ${CMAKE_PROJECT_NAME} ${SOURCES})

@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <fstream>
 #include <unistd.h>
+#include <mer.h>
+#include <bub.h>
 
 int
 main(int argc, char** argv)

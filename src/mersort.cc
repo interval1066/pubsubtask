@@ -4,19 +4,13 @@
 
 using namespace std;
 
-void
-print(vector<int> v)
-{
-	for(unsigned i = 0; i < v.size(); i++) cout << v[i] << " ";
-		cout << endl;
-}
-
 vector<int>
 merge(vector<int> left, vector<int> right)
 {
    vector<int> result;
    while ((int)left.size() > 0 || (int)right.size() > 0) {
       if ((int)left.size() > 0 && (int)right.size() > 0) {
+
          if ((int)left.front() <= (int)right.front()) {
             result.push_back((int)left.front());
             left.erase(left.begin());
