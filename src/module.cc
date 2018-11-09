@@ -1,5 +1,5 @@
 #include <string>
-#include "module.h"
+#include <module.h>
 
 
 static void*

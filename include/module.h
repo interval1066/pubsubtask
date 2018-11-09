@@ -3,43 +3,44 @@
 
 #include <pthread.h>
 #include <unistd.h>
-#include "subscriber.h"
+#include <subscriber.h>
 
 class Module
 {
- public:
-    Module();
-    virtual ~Module();
-    int detach();
-    int join();
+public:
+	Module();
+	virtual ~Module();
+	int detach();
 
-    virtual void* run() = 0;
-    pthread_t self();
-    int start();
+	int join();
+	virtual void* run() = 0;
+	pthread_t self();
 
- private:
-    int m_detached;
-    int m_running;
-    pthread_t m_tid;
+	int start();
+
+private:
+	int m_detached;
+	int m_running;
+	pthread_t m_tid;
 };
 
 class ModuleA : public Module, public Subscriber
 {
- public:
+public:
     ModuleA() { is_message_server_exist = false; }
     void* run();
 
- private:
+private:
     bool is_message_server_exist;
 };
 
 class ModuleB : public Module, public Subscriber
 {
- public:
+public:
     ModuleB() { is_message_server_exist = false; }
     void* run();
 
- private:
+private:
     bool is_message_server_exist;
 };
 

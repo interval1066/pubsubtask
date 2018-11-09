@@ -32,15 +32,3 @@ printVector(vector<int> a)
 	cout << endl;
 }
 
-int
-main(int argc, char** argv)
-{
-	vector<int> a {3,2,6,1};
-	printVector(a);
-	bubbleSort(a);
-
-	printVector(a);
-
-	return EXIT_SUCCESS;
-}
-
