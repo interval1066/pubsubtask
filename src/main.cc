@@ -1,6 +1,8 @@
 #include <module.h>
 #include <subscriber.h>
 #include <cstdlib>
+#include <vector>
+#include <sstream>
 #include <memory>
 #include <stdexcept>
 #include <fstream>
@@ -12,7 +14,8 @@ int
 main(int argc, char** argv)
 {
 	const useconds_t ONE_SECOND = 10000000;
-	std::string meth;
+	std::string meth, line;
+	std::vector<int> a;
 
 	try {
 		if(argc != 4)
@@ -22,11 +25,15 @@ main(int argc, char** argv)
 		if((meth.find("bub") == std::string::npos) && meth.find("mer") == std::string::npos)
 			throw std::string("Bad sort method, options are \'bub\' or \'mer\'");
 
-		std::ifstream inputfile(argv[1], std::ifstream::in);
+		std::ifstream inputfile(argv[1]);
 		std::ofstream outputfile(argv[2]);
 
-		// Create 4 threads:
-		ModuleA* thread1 = new ModuleA();
+		while(std::getline(inputfile, line)) {
+			std::istringstream iss(line);
+			std::cout << iss.str() << std::endl;
+		}
+		
+		/*ModuleA* thread1 = new ModuleA();
 		ModuleA* thread2 = new ModuleA();
 		ModuleB* thread3 = new ModuleB();
 		ModuleB* thread4 = new ModuleB();
@@ -77,7 +84,7 @@ main(int argc, char** argv)
 		if(thread3) delete thread3;
 
 		if(thread4) delete thread4;
-		delete msg_server;
+		delete msg_server;*/
 		inputfile.close();
 
 		outputfile.flush();
