@@ -7,15 +7,32 @@
 #include <stdexcept>
 #include <fstream>
 #include <unistd.h>
+#include <mutex>
+#include <thread>
 #include <mer.h>
 #include <bub.h>
+
+std::vector<int> int_store;
+std::mutex store_lock;
+
+void
+push_int_store(int data)
+{
+	try {
+		store_lock.lock();
+		int_store.push_back(data);
+		store_lock.unlock();
+	}
+	catch (std::exception e) {
+		std::cerr << e.what() << std::endl;
+	}
+}
 
 int
 main(int argc, char** argv)
 {
 	const useconds_t ONE_SECOND = 10000000;
 	std::string meth, line;
-	std::vector<int> a;
 
 	try {
 		if(argc != 4)
