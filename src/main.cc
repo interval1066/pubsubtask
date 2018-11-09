@@ -3,13 +3,26 @@
 #include <cstdlib>
 #include <memory>
 #include <stdexcept>
+#include <fstream>
+#include <unistd.h>
 
 int
 main(int argc, char** argv)
 {
+	const useconds_t ONE_SECOND = 10000000;
+	std::string meth;
+
 	try {
 		if(argc != 4)
 			throw std::string("Usage: pusubsort <infile> <outfile> <mer|bub>");
+
+		std::string meth(argv[3]);
+		if((meth.find("bub") == std::string::npos) && meth.find("mer") == std::string::npos)
+			throw std::string("Bad sort method, options are \'bub\' or \'mer\'");
+
+		std::ifstream inputfile(argv[1], std::ifstream::in);
+		std::ofstream outputfile(argv[2]);
+
 		// Create 4 threads:
 		ModuleA* thread1 = new ModuleA();
 		ModuleA* thread2 = new ModuleA();
@@ -33,8 +46,7 @@ main(int argc, char** argv)
 
 		msg_server->unsubscribeOneThreadFromAllTopics(thread1);
 
-		// Waiting for 1 second
-		usleep(1000000);
+		usleep(ONE_SECOND);
 
 	    // Subscribe these 4 threads to two topics:
 		msg_server->subscribe(thread1, "Topic moduleA");
@@ -46,12 +58,12 @@ main(int argc, char** argv)
 		msg_server->publishMessage("Topic moduleA", msg1);
 
 		// Waiting for 10 seconds
-		usleep(10000000);
+		usleep(ONE_SECOND);
 		// Unsubscribe thread4 from topic "Topic moduleB"
 		msg_server->unsubscribe(thread4, "Topic moduleB");
 
 		// Waitting for 1 seconds
-		usleep(1000000);
+		usleep(ONE_SECOND);
 		// Unsubscribe thread2 from all topics
 		msg_server->unsubscribeOneThreadFromAllTopics(thread2);
 
@@ -61,9 +73,13 @@ main(int argc, char** argv)
 		if(thread1) delete thread1;
 		if(thread2) delete thread2;
 		if(thread3) delete thread3;
-		if(thread4) delete thread4;
 
+		if(thread4) delete thread4;
 		delete msg_server;
+		inputfile.close();
+
+		outputfile.flush();
+		outputfile.close();
 
 		return EXIT_SUCCESS;
 	}
