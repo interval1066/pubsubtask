@@ -46,11 +46,6 @@ main(int argc, char** argv)
 		std::ifstream inputfile(argv[1]);
 		std::ofstream outputfile(argv[2]);
 
-		while(std::getline(inputfile, line)) {
-			std::istringstream iss(line);
-			feeder.push_back(iss.str());
-		}
-		
 		ModuleA* thread1 = new ModuleA();
 		ModuleA* thread2 = new ModuleA();
 		ModuleB* thread3 = new ModuleB();
@@ -79,16 +74,21 @@ main(int argc, char** argv)
 		msg_server->subscribe(thread3, "Topic moduleB");
 		msg_server->subscribe(thread4, "Topic moduleB");
 
-		// loop: pull from feeder vector and process string
-		Message msg1("string to process");
+		// 1) read a line from the input file
+		// 2) create msg object to hold the string
+		// 3) ???
+		// 4) PROFIT!
+		while(std::getline(inputfile, line)) {
+
+			std::istringstream iss(line);
+
+			Message msg1("string to process");
 		
-		msg_server->publishMessage("Topic moduleA", msg1);
+			msg_server->publishMessage("Topic moduleA", msg1);
 
-		usleep(ONE_SECOND);
-
-		while (true) {}
-			std::cout << "done" << std::endl;
-
+			usleep(ONE_SECOND);
+		}
+		
 		if(thread1) delete thread1;
 		if(thread2) delete thread2;
 		if(thread3) delete thread3;
