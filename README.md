@@ -9,4 +9,4 @@ Typical cmake scenario:
 	4) 'make'
 	5) run 'create_data' with a file name argument, this will create the data to sort
 	6) run 'pubsubsort with: the file created in step 1, a name for the output file,
-		and an algorithm, your choices are `mer' (merge sort), and `bub' (bubble sort).
+		and an algorithm, your choices are 'mer' (merge sort), and 'bub' (bubble sort).
