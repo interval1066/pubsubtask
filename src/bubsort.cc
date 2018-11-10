@@ -2,10 +2,8 @@
 #include <vector>
 #include <cstdlib>
 
-using namespace std;
-
 void
-bubbleSort(vector<int>& a)
+bubbleSort(std::vector<int>& a)
 {
 	bool bSwap = false;
 

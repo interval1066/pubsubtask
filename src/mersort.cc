@@ -2,12 +2,10 @@
 #include <vector>
 #include <cstdlib>
 
-using namespace std;
-
-vector<int>
-merge(vector<int> left, vector<int> right)
+std::vector<int>
+merge(std::vector<int> left, std::vector<int> right)
 {
-   vector<int> result;
+   std::vector<int> result;
    while ((int)left.size() > 0 || (int)right.size() > 0) {
       if ((int)left.size() > 0 && (int)right.size() > 0) {
 
@@ -34,13 +32,13 @@ merge(vector<int> left, vector<int> right)
    return result;
 }
 
-vector<int>
-mergeSort(vector<int> m)
+std::vector<int>
+mergeSort(std::vector<int> m)
 {
    if (m.size() <= 1)
       return m;
  
-   vector<int> left, right, result;
+   std::vector<int> left, right, result;
    auto middle = ((int)m.size()+ 1) / 2;
  
    for (int i = 0; i < middle; i++)

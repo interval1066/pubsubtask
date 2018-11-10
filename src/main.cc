@@ -81,9 +81,9 @@ main(int argc, char** argv)
 		msg_server->subscribe(thread4, "Topic moduleB");
 
 		Message msg1("ModuleB");
+		
 		msg_server->publishMessage("Topic moduleA", msg1);
 
-		// Waiting for 10 seconds
 		usleep(ONE_SECOND);
 		// Unsubscribe thread4 from topic "Topic moduleB"
 		msg_server->unsubscribe(thread4, "Topic moduleB");

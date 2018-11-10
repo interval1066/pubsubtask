@@ -31,7 +31,9 @@ public:
 	// current time
 	uint64_t getTimeStamp() { return time_stamp; }
 	// Get topic name
-	std::string getTopicName() { return topic_name; }
+	inline std::string getTopicName() { return topic_name; }
+	// Data for sorting
+	inline int getDataContent() { return data; }
 	// Set content to the message
 	inline void setMessageContent(std::string input_msg_content)
 	{

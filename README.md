@@ -3,7 +3,7 @@
 Slapped together in the wee hours of the night for YOU.
 
 Typical cmake scenario:
-	1) in the sort directory mkdir 'build'
+	1) in the pubsubtask directory mkdir 'build'
 	2) cd to that build directory
 	3) issue 'cmake ..'
 	4) 'make'
