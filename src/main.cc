@@ -19,9 +19,8 @@ void
 push_int_store(int data)
 {
 	try {
-		store_lock.lock();
+		std::lock_guard<std::mutex> lock(store_lock);
 		int_store.push_back(data);
-		store_lock.unlock();
 	}
 	catch (std::exception e) {
 		std::cerr << e.what() << std::endl;
@@ -68,7 +67,8 @@ main(int argc, char** argv)
 
 		usleep(ONE_SECOND);
 
-	    // Subscribe these 4 threads to two topics:
+		// Subscribe these 4 threads to two topics: two readers
+		// and two writers
 		msg_server->subscribe(thread1, "Topic moduleA");
 		msg_server->subscribe(thread2, "Topic moduleA");
 		msg_server->subscribe(thread3, "Topic moduleB");
@@ -76,6 +76,7 @@ main(int argc, char** argv)
 
 		// 1) read a line from the input file
 		// 2) create msg object to hold the string
+		// 3) add the msg to the msg_server
 		// 3) ???
 		// 4) PROFIT!
 		while(std::getline(inputfile, line)) {
