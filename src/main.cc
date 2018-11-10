@@ -51,10 +51,6 @@ main(int argc, char** argv)
 			feeder.push_back(iss.str());
 		}
 		
-		std::cout << feeder.at(0) << std::endl;
-
-		return EXIT_SUCCESS;
-
 		ModuleA* thread1 = new ModuleA();
 		ModuleA* thread2 = new ModuleA();
 		ModuleB* thread3 = new ModuleB();
