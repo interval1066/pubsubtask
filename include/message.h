@@ -8,7 +8,7 @@
 class Message
 {
 public:
-	explicit Message(std::string input_msg_content)
+	explicit Message(std::string input_msg_content) : bDone(true)
 	{
         time_stamp = getCurrentTimeInMilliseconds();
         topic_name = "";
@@ -51,6 +51,8 @@ private:
 	uint64_t time_stamp;
 	std::string topic_name;
 	int data;
+	// Volatile?
+	bool bDone;
 };
 
 #endif

@@ -9,8 +9,7 @@
 #include <unistd.h>
 #include <mutex>
 #include <thread>
-#include <mer.h>
-#include <bub.h>
+#include <algos.h>
 
 std::vector<int> int_store;
 std::mutex store_lock;
@@ -46,14 +45,10 @@ main(int argc, char** argv)
 		std::ofstream outputfile(argv[2]);
 
 		ModuleA* thread1 = new ModuleA();
-		ModuleA* thread2 = new ModuleA();
-		ModuleB* thread3 = new ModuleB();
-		ModuleB* thread4 = new ModuleB();
+		ModuleB* thread2 = new ModuleB();
 
 		thread1->start();
 		thread2->start();
-		thread3->start();
-		thread4->start();
 
 		// Message server keeps lists of subscribers to different
 		// topics
@@ -62,17 +57,13 @@ main(int argc, char** argv)
 		// Send the handle of message server to every thread
 		thread1->setServerHandle(msg_server);
 		thread2->setServerHandle(msg_server);
-		thread3->setServerHandle(msg_server);
-		thread4->setServerHandle(msg_server);
 
 		usleep(ONE_SECOND);
 
 		// Subscribe these 4 threads to two topics: two readers
 		// and two writers
 		msg_server->subscribe(thread1, "Topic moduleA");
-		msg_server->subscribe(thread2, "Topic moduleA");
-		msg_server->subscribe(thread3, "Topic moduleB");
-		msg_server->subscribe(thread4, "Topic moduleB");
+		msg_server->subscribe(thread2, "Topic moduleB");
 
 		// 1) read a line from the input file
 		// 2) create msg object to hold the string
@@ -86,26 +77,25 @@ main(int argc, char** argv)
 			usleep(ONE_SECOND);
 			std::getline(inputfile, line);
 			Message msg2(line);
-
+			
 			msg_server->publishMessage("Topic moduleB", msg2);
 			usleep(ONE_SECOND);
 		}
 		
 		if(thread1) delete thread1;
 		if(thread2) delete thread2;
-		if(thread3) delete thread3;
-
-		if(thread4) delete thread4;
 		delete msg_server;
-		inputfile.close();
 
+		inputfile.close();
 		outputfile.flush();
 		outputfile.close();
 
 		return EXIT_SUCCESS;
 	}
+	// If we get here something is wrong. Don't try to clean up,
+	// hopefully RAII is working here. Just report problem to user.
 	catch (std::string msg) {
 		std::cerr << msg << std::endl;
-	}		
+	}
 	return EXIT_FAILURE;
 }

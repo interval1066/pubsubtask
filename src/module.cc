@@ -1,7 +1,6 @@
 #include <string>
 #include <module.h>
 
-
 static void*
 runModule(void* arg)
 {
@@ -9,7 +8,6 @@ runModule(void* arg)
 }
 
 Module::Module() : m_tid(0), m_running(0), m_detached(0) {}
-
 
 Module::~Module()
 {
@@ -54,14 +52,11 @@ int Module::start() {
     return result;
 }
 
-
 // Every thread instance of Module-A will run the for-loop continuesly
 void*
 ModuleA::run()
 {
     for (int i = 0;; i++) {
-        std::cout << "thread " << self() << ", loop " << i << std::endl;
-
         // Waitting for 1 second
         usleep(1000000);
         // Get the handle of message server
@@ -73,19 +68,11 @@ ModuleA::run()
             // Get the message content
             std::string temp_msg_content = temp_msg.getMessageContent();
 
-            std::cout << "thread " << self() << ", reciever msg --- "
-            << temp_msg_content << std::endl;
-
             // Create a message
-            Message msg_to_ModuleB("A_welcome_from_ModuleA");
             // Publish the message to topic "Topic_for_moduleB"
-            temp_msg_server_handle->publishMessage("Topic_for_moduleB",
-            msg_to_ModuleB);
+            //temp_msg_server_handle->publishMessage("Topic_for_moduleB",
+				//	msg_to_ModuleB);
         }
-		else
-            // Waiting message
-            std::cout << "thread " << self() << " with empty MessageBuffer"
-            << std::endl;
     }
     return nullptr;
 }
@@ -93,32 +80,19 @@ ModuleA::run()
 void*
 ModuleB::run()
 {
-    for (int i = 0;; i++) {
-        std::cout << "thread " << self() << ", loop " << i << std::endl;
+	std::vector<int> holdVector;
 
-        // Waitting for 2 seconds
-        usleep(2000000);
-        // Get the handle of message server
-        MessageServer* temp_msg_server_handle = getServerHandle();
+	for (int i = 0;; i++) {
+		usleep(1000000);
+		// Get the handle of message server
+		MessageServer* temp_msg_server_handle = getServerHandle();
 
-        if (!isMssageBufferEmpty()) {
-            // Fetch a msg from msg buffer, then remove
-            Message temp_msg = fetchAndClearMessageBuffer();
-            // Get the message
-            std::string temp_msg_content = temp_msg.getMessageContent();
-
-            std::cout << "thread " << self() << ", reciever msg --- "
-            << temp_msg_content << std::endl;
-
-            // Create a message
-            Message msg_to_ModuleA("A_welcome_from_ModuleB");
-            // Publish Message to topic "Topic_for_moduleA"
-            temp_msg_server_handle->publishMessage("Topic_for_moduleA",
-            msg_to_ModuleA);
-        }
-		else
-            // Waiting for new message
-            std::cout << "thread " << self() << " with empty MessageBuffer" << std::endl;
-    }
-    return nullptr;
+		if (!isMssageBufferEmpty()) {
+			// Fetch a msg from msg buffer, then remove
+			Message temp_msg = fetchAndClearMessageBuffer();
+			// split and convert into vector of ints
+			
+		}
+	}
+	return nullptr;
 }
