@@ -27,21 +27,21 @@ private:
 class ModuleA : public Module, public Subscriber
 {
 public:
-    ModuleA() { is_message_server_exist = false; }
+    ModuleA() { server_exists = false; }
     void* run();
 
 private:
-    bool is_message_server_exist;
+    bool server_exists;
 };
 
 class ModuleB : public Module, public Subscriber
 {
 public:
-    ModuleB() { is_message_server_exist = false; }
+    ModuleB() { server_exists = false; }
     void* run();
 
 private:
-    bool is_message_server_exist;
+    bool server_exists;
 };
 
 #endif
