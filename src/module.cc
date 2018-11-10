@@ -1,5 +1,6 @@
 #include <string>
 #include <module.h>
+#include <algos.h>
 
 static void*
 runModule(void* arg)
@@ -56,21 +57,23 @@ int Module::start() {
 void*
 ModuleA::run()
 {
-    for (int i = 0;; i++) {
+	const useconds_t ONE_SECOND = 10000000;
+	std::vector<int> holdVectorA;
+
+	for (int i = 0;; i++) {
         // Waitting for 1 second
-        usleep(1000000);
+        usleep(ONE_SECOND);
         // Get the handle of message server
         MessageServer* temp_msg_server_handle = getServerHandle();
 
         if (!isMssageBufferEmpty()) {
             // Fetch a msg from msg buffer, then remove the msg from the buffer
             Message temp_msg = fetchAndClearMessageBuffer();
-            // Get the message content
-            std::string temp_msg_content = temp_msg.getMessageContent();
+				std::string temp;
+				while (temp, temp_msg.getMessageContent(), ' ')
+					holdVectorA.push_back(atoi(temp.c_str()));
 
-            // Create a message
-            // Publish the message to topic "Topic_for_moduleB"
-            //temp_msg_server_handle->publishMessage("Topic_for_moduleB",
+            // temp_msg_server_handle->publishMessage("modB topic",
 				//	msg_to_ModuleB);
         }
     }
@@ -80,18 +83,24 @@ ModuleA::run()
 void*
 ModuleB::run()
 {
-	std::vector<int> holdVector;
+	const useconds_t ONE_SECOND = 10000000;
+	std::vector<int> holdVectorB;
 
 	for (int i = 0;; i++) {
-		usleep(1000000);
+		usleep(ONE_SECOND);
 		// Get the handle of message server
 		MessageServer* temp_msg_server_handle = getServerHandle();
 
 		if (!isMssageBufferEmpty()) {
 			// Fetch a msg from msg buffer, then remove
 			Message temp_msg = fetchAndClearMessageBuffer();
-			// split and convert into vector of ints
-			
+			std::string temp;
+			// split and convert line into vector of ints
+			while (temp, temp_msg.getMessageContent(), ' ')
+				holdVectorB.push_back(atoi(temp.c_str()));
+
+            // temp_msg_server_handle->publishMessage("modB topic",
+				//	msg_to_ModuleB);
 		}
 	}
 	return nullptr;
