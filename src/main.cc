@@ -71,8 +71,6 @@ main(int argc, char** argv)
 		thread3->setServerHandle(msg_server);
 		thread4->setServerHandle(msg_server);
 
-		msg_server->unsubscribeOneThreadFromAllTopics(thread1);
-
 		usleep(ONE_SECOND);
 
 	    // Subscribe these 4 threads to two topics:
@@ -81,18 +79,12 @@ main(int argc, char** argv)
 		msg_server->subscribe(thread3, "Topic moduleB");
 		msg_server->subscribe(thread4, "Topic moduleB");
 
-		Message msg1("ModuleB");
+		// loop: pull from feeder vector and process string
+		Message msg1("string to process");
 		
 		msg_server->publishMessage("Topic moduleA", msg1);
 
 		usleep(ONE_SECOND);
-		// Unsubscribe thread4 from topic "Topic moduleB"
-		msg_server->unsubscribe(thread4, "Topic moduleB");
-
-		// Waitting for 1 seconds
-		usleep(ONE_SECOND);
-		// Unsubscribe thread2 from all topics
-		msg_server->unsubscribeOneThreadFromAllTopics(thread2);
 
 		while (true) {}
 			std::cout << "done" << std::endl;
