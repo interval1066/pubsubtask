@@ -80,13 +80,14 @@ main(int argc, char** argv)
 		// 3) ???
 		// 4) PROFIT!
 		while(std::getline(inputfile, line)) {
+			Message msg(line);
+			msg_server->publishMessage("Topic moduleA", msg);
 
-			std::istringstream iss(line);
+			usleep(ONE_SECOND);
+			std::getline(inputfile, line);
+			Message msg2(line);
 
-			Message msg1("string to process");
-		
-			msg_server->publishMessage("Topic moduleA", msg1);
-
+			msg_server->publishMessage("Topic moduleB", msg2);
 			usleep(ONE_SECOND);
 		}
 		
