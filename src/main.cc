@@ -33,6 +33,7 @@ main(int argc, char** argv)
 {
 	const useconds_t ONE_SECOND = 10000000;
 	std::string meth, line;
+	std::vector<std::string> feeder;
 
 	try {
 		if(argc != 4)
@@ -47,9 +48,13 @@ main(int argc, char** argv)
 
 		while(std::getline(inputfile, line)) {
 			std::istringstream iss(line);
-			std::cout << iss.str() << std::endl;
+			feeder.push_back(iss.str());
 		}
 		
+		std::cout << feeder.at(0) << std::endl;
+
+		return EXIT_SUCCESS;
+
 		ModuleA* thread1 = new ModuleA();
 		ModuleA* thread2 = new ModuleA();
 		ModuleB* thread3 = new ModuleB();
