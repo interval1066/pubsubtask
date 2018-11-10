@@ -104,6 +104,6 @@ main(int argc, char** argv)
 	}
 	catch (std::string msg) {
 		std::cerr << msg << std::endl;
-		return EXIT_FAILURE;
 	}		
+	return EXIT_FAILURE;
 }
